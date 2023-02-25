@@ -1,5 +1,8 @@
+import selenium.common
+
 from .base_page import BasePage
 from selenium.webdriver.common.by import By
+from selenium.common import exceptions
 
 SEARCH_FIELD_XPATH = "/html/body/main/div[2]/form/div[2]/div/input"
 SEARCH_BUTTON_XPATH = "/html/body/main/div[2]/form/div[2]/button"
@@ -15,23 +18,35 @@ class YaMainPage(BasePage):
         Ввод в поле поиска запроса
         :return:
         """
-        search_field = self.browser.find_element(By.XPATH, SEARCH_FIELD_XPATH)
-        search_field.send_keys(REQUEST)
+        try:
+            search_field = self.browser.find_element(By.XPATH, SEARCH_FIELD_XPATH)
+            search_field.send_keys(REQUEST)
+            return True, SEARCH_FIELD_XPATH
+        except selenium.common.exceptions.NoSuchElementException:
+            return False, SEARCH_FIELD_XPATH
 
     def should_be_suggestion_table(self):
         """
         Поиск всплывающего поля с подсказками
         :return:
         """
-        self.browser.find_element(By.XPATH, SUGGESTION_TABLE_XPATH)
+        try:
+            self.browser.find_element(By.XPATH, SUGGESTION_TABLE_XPATH)
+            return True, SUGGESTION_TABLE_XPATH
+        except selenium.common.NoSuchElementException:
+            return False, SUGGESTION_TABLE_XPATH
 
     def doit_go_to_search_result_page(self):
         """
         Поиск кнопки найти и нажатие на нее
         :return:
         """
-        search_button = self.browser.find_element(By.XPATH, SEARCH_BUTTON_XPATH)
-        search_button.click()
+        try:
+            search_button = self.browser.find_element(By.XPATH, SEARCH_BUTTON_XPATH)
+            search_button.click()
+            return True, SEARCH_BUTTON_XPATH
+        except selenium.common.exceptions.NoSuchElementException:
+            return False, SEARCH_BUTTON_XPATH
 
     def get_first_links_from_search_result_page(self):
         """

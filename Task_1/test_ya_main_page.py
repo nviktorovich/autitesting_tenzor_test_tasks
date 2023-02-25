@@ -13,7 +13,8 @@ def test_check_search_field_exist(browser):
     """
     page = YaMainPage(browser, LINK)
     page.open()
-    page.doit_input_text_to_search_field()
+    res, selector = page.doit_input_text_to_search_field()
+    assert res, f"not exist element with selector {selector}"
 
 
 def test_check_suggestion_table_exist(browser):
@@ -25,7 +26,8 @@ def test_check_suggestion_table_exist(browser):
     page = YaMainPage(browser, LINK)
     page.open()
     page.doit_input_text_to_search_field()
-    page.should_be_suggestion_table()
+    res, selector = page.should_be_suggestion_table()
+    assert res, f"not exist element with selector {selector}"
 
 
 def test_check_go_to_search_result_page(browser):
@@ -37,7 +39,8 @@ def test_check_go_to_search_result_page(browser):
     page = YaMainPage(browser, LINK)
     page.open()
     page.doit_input_text_to_search_field()
-    page.doit_go_to_search_result_page()
+    res, selector = page.doit_go_to_search_result_page()
+    assert res, f"not exist element with selector {selector}"
 
 
 def test_check_first_link_from_search_result_page(browser):
