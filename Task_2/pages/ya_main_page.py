@@ -1,7 +1,10 @@
 import time
 
+import selenium.common
+
 from .base_page import BasePage
 from selenium.webdriver.common.by import By
+from selenium.common import exceptions
 
 MENU_BUTTON_XPATH = "/html/body/main/div[3]/div/a"
 PICTURE_BUTTON_CSS = "body > div.popup2.services-more-popup.services-more-popup_bottom_yes.popup2_theme_normal" \
@@ -18,7 +21,11 @@ class YaMainPage(BasePage):
         Поиск элемента кнопки меню
         :return:
         """
-        self.browser.find_element(By.XPATH, MENU_BUTTON_XPATH)
+        try:
+            self.browser.find_element(By.XPATH, MENU_BUTTON_XPATH)
+            return True, MENU_BUTTON_XPATH
+        except selenium.common.NoSuchElementException:
+            return False, MENU_BUTTON_XPATH
 
     def doit_press_pictures_button(self):
         """

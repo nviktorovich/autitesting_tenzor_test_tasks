@@ -15,7 +15,8 @@ def test_menu_button_on_main_page(browser):
     """
     page = YaMainPage(browser, LINK)
     page.open()
-    page.should_be_menu_button()
+    res, selector = page.should_be_menu_button()
+    assert res, f"not found element with selector {selector}"
 
 
 def test_press_picture_button_from_menu(browser):
